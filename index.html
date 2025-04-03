@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .form-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        .form-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .form-section h2 {
+            margin-top: 0;
+            color: #2c3e50;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #34495e;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            grid-column: 1 / -1;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #e8f4f8;
+            border-radius: 8px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Student Performance Prediction</h1>
+    <form id="predictionForm">
+        <div class="form-container">
+            
+            <!-- Personal Information -->
+            <div class="form-section">
+                <h2>Personal Information</h2>
+                <div class="form-group">
+                    <label for="marital_status">Marital Status:</label>
+                    <select id="marital_status" name="Marital status" required>
+                        <option value="1">Single</option>
+                        <option value="2">Married</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="Gender" required>
+                        <option value="1">Male</option>
+                        <option value="0">Female</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="age">Age at Enrollment:</label>
+                    <input type="number" id="age" name="Age at enrollment" min="17" max="70" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="nacionality">Nationality:</label>
+                    <input type="number" id="nacionality" name="Nacionality" min="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="international">International Student:</label>
+                    <select id="international" name="International" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Application Information -->
+            <div class="form-section">
+                <h2>Application Information</h2>
+                <div class="form-group">
+                    <label for="application_mode">Application Mode:</label>
+                    <input type="number" id="application_mode" name="Application mode" min="1" max="50" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="application_order">Application Order:</label>
+                    <input type="number" id="application_order" name="Application order" min="1" max="10" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="course">Course:</label>
+                    <input type="number" id="course" name="Course" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="attendance">Daytime/Evening Attendance:</label>
+                    <select id="attendance" name="Daytime/evening attendance&#9;" required>
+                        <option value="1">Daytime</option>
+                        <option value="0">Evening</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Academic Background -->
+            <div class="form-section">
+                <h2>Academic Background</h2>
+                <div class="form-group">
+                    <label for="prev_qualification">Previous Qualification:</label>
+                    <input type="number" id="prev_qualification" name="Previous qualification" min="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="prev_grade">Previous Qualification Grade:</label>
+                    <input type="number" id="prev_grade" name="Previous qualification (grade)" step="0.1" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="admission_grade">Admission Grade:</label>
+                    <input type="number" id="admission_grade" name="Admission grade" step="0.1" min="0" required>
+                </div>
+            </div>
+            
+            <!-- Family Information -->
+            <div class="form-section">
+                <h2>Family Information</h2>
+                <div class="form-group">
+                    <label for="mother_qualification">Mother's Qualification:</label>
+                    <input type="number" id="mother_qualification" name="Mother's qualification" min="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="father_qualification">Father's Qualification:</label>
+                    <input type="number" id="father_qualification" name="Father's qualification" min="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mother_occupation">Mother's Occupation:</label>
+                    <input type="number" id="mother_occupation" name="Mother's occupation" min="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="father_occupation">Father's Occupation:</label>
+                    <input type="number" id="father_occupation" name="Father's occupation" min="1" required>
+                </div>
+            </div>
+            
+            <!-- Financial & Special Circumstances -->
+            <div class="form-section">
+                <h2>Financial & Special Circumstances</h2>
+                <div class="form-group">
+                    <label for="displaced">Displaced:</label>
+                    <select id="displaced" name="Displaced" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="special_needs">Educational Special Needs:</label>
+                    <select id="special_needs" name="Educational special needs" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="debtor">Debtor:</label>
+                    <select id="debtor" name="Debtor" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tuition_fees">Tuition Fees Up to Date:</label>
+                    <select id="tuition_fees" name="Tuition fees up to date" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="scholarship">Scholarship Holder:</label>
+                    <select id="scholarship" name="Scholarship holder" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- First Semester Performance -->
+            <div class="form-section">
+                <h2>First Semester Performance</h2>
+                <div class="form-group">
+                    <label for="cu1_credited">Credited Units:</label>
+                    <input type="number" id="cu1_credited" name="Curricular units 1st sem (credited)" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cu1_enrolled">Enrolled Units:</label>
+                    <input type="number" id="cu1_enrolled" name="Curricular units 1st sem (enrolled)" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cu1_evaluations">Evaluations:</label>
+                    <input type="number" id="cu1_evaluations" name="Curricular units 1st sem (evaluations)" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cu1_approved">Approved Units:</label>
+                    <input type="number" id="cu1_approved" name="Curricular units 1st sem (approved)" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cu1_grade">Average Grade:</label>
+                    <input type="number" id="cu1_grade" name="Curricular units 1st sem (grade)" step="0.000001" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cu1_without_eval">Units Without Evaluations:</label>
+                    <input type="number" id="cu1_without_eval" name="Curricular units 1st sem (without evaluations)" min="0" required>
+                </div>
+            </div>
+            
+            <!-- Second Semester Performance -->
+            <div class="form-section">
+                <h2>Second Semester Performance</h2>
+                <div class="form-group">
+                    <label for="cu2_credited">Credited Units:</label>
+                    <input type="number" id="cu2_credited" name="Curricular units 2nd sem (credited)" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cu2_enrolled">Enrolled Units:</label>
+                    <input type="number" id="cu2_enrolled" name="Curricular units 2nd sem (enrolled)" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cu2_evaluations">Evaluations:</label>
+                    <input type="number" id="cu2_evaluations" name="Curricular units 2nd sem (evaluations)" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cu2_approved">Approved Units:</label>
+                    <input type="number" id="cu2_approved" name="Curricular units 2nd sem (approved)" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cu2_grade">Average Grade:</label>
+                    <input type="number" id="cu2_grade" name="Curricular units 2nd sem (grade)" step="0.000001" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cu2_without_eval">Units Without Evaluations:</label>
+                    <input type="number" id="cu2_without_eval" name="Curricular units 2nd sem (without evaluations)" min="0" required>
+                </div>
+            </div>
+            
+            <!-- Economic Indicators -->
+            <div class="form-section">
+                <h2>Economic Indicators</h2>
+                <div class="form-group">
+                    <label for="unemployment">Unemployment Rate:</label>
+                    <input type="number" id="unemployment" name="Unemployment rate" step="0.1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="inflation">Inflation Rate:</label>
+                    <input type="number" id="inflation" name="Inflation rate" step="0.1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="gdp">GDP:</label>
+                    <input type="number" id="gdp" name="GDP" step="0.01" required>
+                </div>
+            </div>
+            
+            <button type="submit">Predict Performance</button>
+        </div>
+    </form>
+    
+    <div id="result">
+        <h2>Prediction Result</h2>
+        <p id="predictionText"></p>
+    </div>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Collect all form data
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Convert numeric fields to numbers
+            const numericFields = [
+                'Application mode', 'Application order', 'Course',"Daytime/evening attendance\t",
+                'Previous qualification', 'Previous qualification (grade)',
+                'Admission grade', 'Mother\'s qualification', 
+                'Father\'s qualification', 'Mother\'s occupation',
+                'Father\'s occupation', 'Age at enrollment', 'Nacionality',
+                'Curricular units 1st sem (credited)',
+                'Curricular units 1st sem (enrolled)',
+                'Curricular units 1st sem (evaluations)',
+                'Curricular units 1st sem (approved)',
+                'Curricular units 1st sem (grade)',
+                'Curricular units 1st sem (without evaluations)',
+                'Curricular units 2nd sem (credited)',
+                'Curricular units 2nd sem (enrolled)',
+                'Curricular units 2nd sem (evaluations)',
+                'Curricular units 2nd sem (approved)',
+                'Curricular units 2nd sem (grade)',
+                'Curricular units 2nd sem (without evaluations)',
+                'Unemployment rate', 'Inflation rate', 'GDP'
+            ];
+            
+            numericFields.forEach(field => {
+                if (data[field]) data[field] = parseFloat(data[field]);
+            });
+
+            // Convert boolean-like fields to 1/0
+            const booleanFields = [
+                'Displaced', 'Educational special needs', 'Debtor',
+                'Tuition fees up to date', 'Gender', 'Scholarship holder',
+                "Daytime/evening attendance\t", 'International'
+            ];
+            
+            booleanFields.forEach(field => {
+                if (data[field]) data[field] = data[field] === '1' ? 1 : 0;
+            });
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    document.getElementById('predictionText').textContent = 
+                        `Predicted Outcome: ${result.prediction}`;
+                    document.getElementById('result').style.display = 'block';
+                } else {
+                    alert(`Error: ${result.error}`);
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        });
+    </script>
+</body>
+</html>
