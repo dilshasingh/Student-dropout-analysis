@@ -11,3 +11,5 @@ approach addresses challenges like imbalanced data and model
 interpretability, offering actionable insights for institutions to implement 
 early intervention strategies and improve student success. 
 
+Cloud Deployment Link: https://test-433550424379.southamerica-west1.run.app/
+
